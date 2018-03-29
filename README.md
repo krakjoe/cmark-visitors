@@ -35,8 +35,8 @@ The following may change rapidly ...
   * CommonMark\Visitors\Twitter\Tweet:   `status`:             twitter api returns HTML
 
 ### GitHub
-  * CommonMark\Visitors\GitHub\Issue:          `[user/project#num]`:      autolink to github issue
-  * CommonMark\Visitors\GitHub\PullRequest:    `[user/project#pull/num]`: autolink to github pull request
+  * CommonMark\Visitors\GitHub\Issue:          `[github:user/project#num]`:      autolink to github issue
+  * CommonMark\Visitors\GitHub\PullRequest:    `[github:user/project#pull/num]`: autolink to github pull request
 
 #### Usage
 
