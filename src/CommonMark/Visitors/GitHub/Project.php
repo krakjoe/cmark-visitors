@@ -5,8 +5,8 @@ namespace CommonMark\Visitors\GitHub {
 	use CommonMark\Node\Text;
 	use CommonMark\Node\Link;
 
-	class PullRequest extends \CommonMark\Visitors\Visitor {
-		const Pattern = "~\[github:([^#]+)/([^#]+)#pull/([0-9]+)\]~i";
+	class Project extends \CommonMark\Visitors\Visitor {
+		const Pattern = "~\[github:([^#]+)/([^#]+)\]~i";
 
 		public function enter(IVisitable $node) {
 			if (!$node instanceof Text)
@@ -14,31 +14,29 @@ namespace CommonMark\Visitors\GitHub {
 
 			$container = $node->parent;
 
-			if (!\preg_match_all(PullRequest::Pattern, $node->literal, $requests))
+			if (!\preg_match_all(Project::Pattern, $node->literal, $project))
 				return;
 
-			$text = \preg_split(PullRequest::Pattern, $node->literal);
+			$text = \preg_split(Project::Pattern, $node->literal);
 
 			$node->unlink();
 
 			foreach ($text as $idx => $chunk) {
 				$container->appendChild(new Text($chunk));
 
-				if (!isset($requests[2][$idx]))
+				if (!isset($project[2][$idx]))
 					continue;
 
 				$link = new Link(sprintf(
-					"https://github.com/%s/%s/pull/%d",
-					$requests[1][$idx],
-					$requests[2][$idx],
-					$requests[3][$idx]
+					"https://github.com/%s/%s",
+					$project[1][$idx],
+					$project[2][$idx]
 				));
 
 				$link->appendChild(new Text(sprintf(
-					"%s/%s#pull/%d",
-					$requests[1][$idx],
-					$requests[2][$idx],
-					$requests[3][$idx]
+					"%s/%s",
+					$project[1][$idx],
+					$project[2][$idx]
 				)));
 
 				$container->appendChild($link);
