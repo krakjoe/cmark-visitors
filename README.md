@@ -11,6 +11,14 @@ The following may change rapidly ...
   * CommonMark\Visitors\Script\Delete:   --del--:            &lt;del&gt;
   * CommonMark\Visitors\Script\Insert:   ++ins++:            &lt;ins&gt;
 
+### Item Checks
+  * CommonMark\Visitors\Item\Check:
+    * \[ \] empty
+    * \[x\] checked
+    * \[X\] checked
+    * \[+\] checked
+    * \[-\] crossed
+
 ### Twitter
   * CommonMark\Visitors\Twitter\Handle:  @handle:            &lt;a href="http://twitter.com/handle"&gt;
   * CommonMark\Visitors\Twitter\Tweet:   status:             twitter api returns HTML
