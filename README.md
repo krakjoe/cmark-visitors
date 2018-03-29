@@ -13,7 +13,7 @@ The following may change rapidly ...
 
 ### Item Checks
   * CommonMark\Visitors\Item\Check:
-    * \[ \] empty
+    * \\[ \\] empty
     * \[x\] checked
     * \[X\] checked
     * \[+\] checked
