@@ -38,6 +38,7 @@ The following may change rapidly ...
   * CommonMark\Visitors\GitHub\Project:        `[github:user/project]`:          autolink to github project
   * CommonMark\Visitors\GitHub\Issue:          `[github:user/project#num]`:      autolink to github issue
   * CommonMark\Visitors\GitHub\PullRequest:    `[github:user/project#pull/num]`: autolink to github pull request
+  * CommonMark\Visitors\GitHub\Gist:           `[gist:user/gist]`:               embed gist
 
 #### Usage
 
