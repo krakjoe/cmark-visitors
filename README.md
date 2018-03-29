@@ -19,6 +19,17 @@ The following may change rapidly ...
     * `[+]` checked
     * `[-]` crossed
 
+### Table
+
+```
+-------------------------------------
+| head one   |       head two       |
+-------------------------------------
+| row one      | row one head two   | 
+| row two      | row two head two   | 
+-------------------------------------
+```
+
 ### Twitter
   * CommonMark\Visitors\Twitter\Handle:  `@handle`:            &lt;a href="http://twitter.com/handle"&gt;
   * CommonMark\Visitors\Twitter\Tweet:   `status`:             twitter api returns HTML
