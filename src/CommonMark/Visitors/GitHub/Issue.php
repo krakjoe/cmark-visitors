@@ -6,7 +6,7 @@ namespace CommonMark\Visitors\GitHub {
 	use CommonMark\Node\Link;
 
 	class Issue extends \CommonMark\Visitors\Visitor {
-		const Pattern = "~\[github:([^#]+)/([^#]+)#([0-9]+)\]~i";
+		const Pattern = "~\[github:([^/]+)/([^#]+)#([0-9]+)\]~i";
 
 		public function enter(IVisitable $node) {
 			if (!$node instanceof Text)
@@ -28,7 +28,7 @@ namespace CommonMark\Visitors\GitHub {
 					continue;
 
 				$link = new Link(sprintf(
-					"https://github.com/%s/%s/issue/%d",
+					"https://github.com/%s/%s/issues/%d",
 					$issues[1][$idx],
 					$issues[2][$idx],
 					$issues[3][$idx]
