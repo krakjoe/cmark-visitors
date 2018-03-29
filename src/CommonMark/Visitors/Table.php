@@ -24,11 +24,10 @@ namespace CommonMark\Visitors {
 			}
 
 			if ($this->headings && $node instanceof Heading) {
-				$node->next->accept(new class($this->rows, $this->garbage) 
+				$node->next->accept(new class($this->rows) 
 							extends \CommonMark\Visitors\Visitor {
-					public function __construct(array &$rows, &$garbage) {
+					public function __construct(array &$rows) {
 						$this->rows = &$rows;
-						$this->garbage = &$garbage;
 					}
 
 					public function enter(IVisitable $node) {
