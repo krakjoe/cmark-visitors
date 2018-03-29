@@ -1,0 +1,12 @@
+{
+    "name": "krakjoe/cmark-visitors",
+    "require": {
+        "php": "7.*",
+        "ext-cmark": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "CommonMark\\": "src/CommonMark/"
+        }
+    }
+}
