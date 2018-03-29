@@ -13,11 +13,11 @@ The following may change rapidly ...
 
 ### Item Checks
   * CommonMark\Visitors\Item\Check:
-    * \\[ \\] empty
-    * \[x\] checked
-    * \[X\] checked
-    * \[+\] checked
-    * \[-\] crossed
+    * `[ ]` empty
+    * `[x]` checked
+    * `[X]` checked
+    * `[+]` checked
+    * `[-]` crossed
 
 ### Twitter
   * CommonMark\Visitors\Twitter\Handle:  @handle:            &lt;a href="http://twitter.com/handle"&gt;
