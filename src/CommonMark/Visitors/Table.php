@@ -38,7 +38,6 @@ namespace CommonMark\Visitors {
 								$this->rows[] = 
 									array_map('trim', $rows[1]);
 							}
-							$node->unlink();
 						}
 					}
 
