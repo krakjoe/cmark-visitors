@@ -41,6 +41,8 @@ namespace CommonMark\Visitors\GitHub {
 
 				$container->appendChild($link);
 			}
+
+			
 		}
 	}
 }

@@ -65,3 +65,7 @@ Will output `<p><a href="http://twitter.com/krakjoe">@krakjoe</a></p>`
 #### Testing
 
 Not yet ... it's coming ...
+
+###### Note
+
+I do not intend to maintain this code going forwards, looking for contributors/maintainers or another project to take it over ...

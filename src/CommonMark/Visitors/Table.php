@@ -5,7 +5,9 @@ namespace CommonMark\Visitors {
 	use CommonMark\Node\ThematicBreak;
 	use CommonMark\Node\Heading;
 	use CommonMark\Node\Text;
-	use CommonMark\Node\HTMLBlock;
+	use CommonMark\Node\HTMLInline;	
+	use CommonMark\Node\Paragraph;
+	use CommonMark\Node\SoftBreak;
 
 	class Table extends \CommonMark\Visitors\Visitor {
 		const Pattern = "~\|[\s]+([^\|]+)[\s]+?~";
@@ -49,38 +51,51 @@ namespace CommonMark\Visitors {
 		}
 
 		public function leave(IVisitable $node) {
-
-			if ($this->headings) {
-				$node->unlink();
-			}
-
 			if ($this->headings && $this->rows) {
-				$table[] = "<table>";
-				$table[] = "<thead>";
-				$table[] = "<tr>";
-				foreach ($this->headings as $heading) {
-					$table[] = sprintf("<th>%s</th>", $heading);
-				}
-					
-				$table[] = "</tr>";
-				$table[] = "</thead>";
-				$table[] = "<tbody>";
-				foreach ($this->rows as $row) {
-					$table[] = "<tr>";
-					foreach ($row as $col) {
-						$table[] = sprintf("<td>%s</td>", $col);
-					}						
-					$table[] = "</tr>";
-				}
-				$table[] = "</tbody>";
-				$table[] = "</table>";
+				$root = new Paragraph;	
 
-				$this->top->replace(
-					new HTMLBlock(implode(PHP_EOL, $table)));
+				$node->unlink();		
+
+				$root->appendChild(new HTMLInline("<table>"));
+				$root->appendChild(new SoftBreak);
+				$root->appendChild(new HTMLInline("<thead>"));
+				$root->appendChild(new SoftBreak);
+				$root->appendChild(new HTMLInline("<tr>"));
+				$root->appendChild(new SoftBreak);
+				
+				foreach ($this->headings as $heading) {
+					$root->appendChild(new HTMLInline("<th>"));
+					$root->appendChild(new Text($heading));
+					$root->appendChild(new HTMLInline("</th>"));
+					$root->appendChild(new SoftBreak);
+				}
+				$root->appendChild(new HTMLInline("</tr>"));
+				$root->appendChild(new SoftBreak);
+				$root->appendChild(new HTMLInline("</thead>"));
+				$root->appendChild(new SoftBreak);
+				$root->appendChild(new HTMLInline("<tbody>"));
+				$root->appendChild(new SoftBreak);
+
+				foreach ($this->rows as $row) {
+					$root->appendChild(new HTMLInline("<tr>"));
+					foreach ($row as $column) {
+						$root->appendChild(new HTMLInline("<td>"));
+						$root->appendChild(new Text($column));
+						$root->appendChild(new HTMLInline("</td>"));
+						$root->appendChild(new SoftBreak);
+					}
+					$root->appendChild(new HTMLInline("</tr>"));
+					$root->appendChild(new SoftBreak);
+				}
+
+				$root->appendChild(new HTMLInline("</tbody>"));
+				$root->appendChild(new SoftBreak);
+				$root->appendChild(new HTMLInline("</table>"));
 
 				$this->headings = [];
 				$this->rows = [];
-				$this->top = null;
+
+				return $this->top->replace($root);
 			}
 		}
 
