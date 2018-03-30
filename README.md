@@ -19,17 +19,6 @@ The following may change rapidly ...
     * `[+]` checked
     * `[-]` crossed
 
-### Table
-
-```
--------------------------------------
-| head one   |       head two       |
--------------------------------------
-| row one      | row one head two   | 
-| row two      | row two head two   | 
--------------------------------------
-```
-
 ### Twitter
   * CommonMark\Visitors\Twitter\Handle:  `@handle`:            autolink twitter handle
   * CommonMark\Visitors\Twitter\Tweet:   `status`:             twitter api returns HTML
