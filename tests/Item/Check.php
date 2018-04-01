@@ -8,11 +8,15 @@ $visitors = new Visitors;
 $visitors->add(new \CommonMark\Visitors\Item\Check);
 
 $str = <<<EOD
-This is empty checkbox: [ ], 
-This is crossed checkbox: [-],
-This is checked checbox: [x], 
-This is checked checkbox too: [X], 
-This aperently is also a checked checkbox: [+]
+This is a list with checkboxes:
+
+ * 1st Item [+]
+ * 2nd Item [x]
+ * 34t Item [X]
+ * 4th Item [-]
+ * 5th Item [ ]
+
+ Not an Item [x]
 EOD;
 
 
