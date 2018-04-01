@@ -19,6 +19,15 @@
     <testsuite name="Item/Check">
       <file>tests/Visitors/Item/Check.php</file>
     </testsuite>
+    <testsuite name="Twitter/Handle">
+      <file>tests/Visitors/Twitter/Handle.php</file>
+    </testsuite>
+    <testsuite name="Twitter/Tweet">
+      <file>tests/Visitors/Twitter/Tweet.php</file>
+    </testsuite>
+    <testsuite name="Table">
+      <file>tests/Visitors/Table.php</file>
+    </testsuite>
   </testsuites>
   <filter>
   <whitelist processUncoveredFilesFromWhitelist="true">
