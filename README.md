@@ -6,8 +6,8 @@ Visitors for CommonMark implementing some useful AST transformations
 The following may change rapidly ...
 
 ### Script
-  * CommonMark\Visitors\Script\Super:    `^^super script^^`:   &lt;sup&gt;
-  * CommonMark\Visitors\Script\Sub:      `~~sub script~~`:     &lt;sub&gt;
+  * CommonMark\Visitors\Script\Super:    `^^super script^^`:   &lt;sub&gt;
+  * CommonMark\Visitors\Script\Sub:      `~~sub script~~`:     &lt;sup&gt;
   * CommonMark\Visitors\Script\Delete:   `--del--`:            &lt;del&gt;
   * CommonMark\Visitors\Script\Insert:   `++ins++`:            &lt;ins&gt;
 
