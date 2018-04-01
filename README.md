@@ -23,6 +23,38 @@ The following may change rapidly ...
   * CommonMark\Visitors\Twitter\Handle:  `@handle`:            autolink twitter handle
   * CommonMark\Visitors\Twitter\Tweet:   `status`:             twitter api returns HTML
 
+### Table
+
+Basic table support:
+
+```
+-------------------------------------------
+|: Left Align |: Centered :| Right Align :|
+-------------------------------------------
+| Left        |  Centered  |        Right |
+-------------------------------------------
+```
+
+becomes:
+
+```
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Left Align</th>
+<th style="text-align: center;">Centered</th>
+<th style="text-align: right;">Right Align</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Left</td>
+<td style="text-align: center;">Centered</td>
+<td style="text-align: right;">Right</td>
+</tr>
+</tbody>
+</table>
+```
 #### Usage
 
 ```php

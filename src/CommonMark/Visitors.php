@@ -13,6 +13,18 @@ namespace CommonMark {
 			$this->visitors[] = $visitor;
 		}
 
+		public function except(IVisitor ... $exclude) : Visitors {
+			$result = new self;
+			foreach ($this->visitors as $included) {
+				foreach ($exclude as $excluded) {
+					if ($included == $excluded)
+						continue 2;
+				}
+				$result->add($included);
+			}
+			return $result;
+		}
+
 		public function enter(IVisitable $node) {
 
 			foreach ($this->visitors as $visitor) {

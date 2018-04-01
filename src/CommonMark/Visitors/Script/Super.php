@@ -12,14 +12,18 @@ namespace CommonMark\Visitors\Script {
 			if (!$node instanceof Text)
 				return;
 
-			$container = $node->parent;
-
 			if (!\preg_match_all(Super::Pattern, $node->literal, $supers))
 				return;
 
+			if (count($supers[0]) == 1 && $supers[0][0] == trim($node->literal)) {
+				$node->replace(
+					new HTMLInline("<sup>{$supers[2][0]}</sup>"));
+				return;
+			}
+
 			$text = \preg_split(Super::Pattern, $node->literal);
 
-			$node->unlink();
+			$container = $node->parent;
 
 			foreach ($text as $idx => $chunk) {
 				$container->appendChild(new Text($chunk));
@@ -34,6 +38,8 @@ namespace CommonMark\Visitors\Script {
 
 				$container->appendChild($super);
 			}
+
+			$node->unlink();
 		}
 	}
 }
