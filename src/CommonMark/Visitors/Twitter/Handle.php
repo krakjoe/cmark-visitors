@@ -13,8 +13,6 @@ namespace CommonMark\Visitors\Twitter {
 			if (!$node instanceof Text)
 				return;
 
-			if ($container instanceof Link or $container instanceof Image)
-				return;
 
 			if (!\preg_match_all(Handle::Pattern, $node->literal, $handles))
 				return;
