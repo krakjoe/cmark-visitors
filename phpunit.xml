@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpunit bootstrap="vendor/autoload.php">
+  <testsuites>
+    <testsuite name="Table">
+      <file>tests/Visitors/Table.php</file>
+    </testsuite>
+    <testsuite name="Script/Sub">
+      <file>tests/Visitors/Script/Sub.php</file>
+    </testsuite>
+    <testsuite name="Script/Super">
+      <file>tests/Visitors/Script/Super.php</file>
+    </testsuite>
+    <testsuite name="Script/Insert">
+      <file>tests/Visitors/Script/Insert.php</file>
+    </testsuite>
+    <testsuite name="Script/Delete">
+      <file>tests/Visitors/Script/Delete.php</file>
+    </testsuite>
+    <testsuite name="Item/Check">
+      <file>tests/Visitors/Item/Check.php</file>
+    </testsuite>
+  </testsuites>
+  <filter>
+  <whitelist processUncoveredFilesFromWhitelist="true">
+    <directory suffix=".php">src</directory>
+    <exclude>
+    </exclude>
+  </whitelist>
+  </filter>
+</phpunit>
