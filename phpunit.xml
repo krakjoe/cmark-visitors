@@ -4,9 +4,6 @@
     <testsuite name="Visitors">
       <file>tests/Visitors.php</file>
     </testsuite>
-    <testsuite name="Table">
-      <file>tests/Visitors/Table.php</file>
-    </testsuite>
     <testsuite name="Script/Sub">
       <file>tests/Visitors/Script/Sub.php</file>
     </testsuite>

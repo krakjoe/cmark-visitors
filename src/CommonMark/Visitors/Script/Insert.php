@@ -6,7 +6,7 @@ namespace CommonMark\Visitors\Script {
 	use CommonMark\Node\HTMLInline;
 
 	class Insert extends \CommonMark\Visitors\Visitor {
-		const Pattern = "~(\+{2,})([^\+]+)(\+{2,})~";
+		const Pattern = "~(\+{2,})([^\+{2,}]+)(\+{2,})~";
 
 		public function enter(IVisitable $node) {
 			if (!$node instanceof Text)
@@ -15,31 +15,32 @@ namespace CommonMark\Visitors\Script {
 			if (!\preg_match_all(Insert::Pattern, $node->literal, $inserts))
 				return;
 
-			if (count($inserts[0]) == 1 && $inserts[0][0] == \trim($node->literal)) {
-				$node->replace(
+			if (\count($inserts[0]) == 1 && $inserts[0][0] == \trim($node->literal)) {
+				return $node->replace(
 					new HTMLInline("<ins>{$inserts[2][0]}</ins>"));
-				return;
 			}
 
 			$text = \preg_split(Insert::Pattern, $node->literal);
 
-			$container = $node->parent;
+			$custom = new \CommonMark\Node\CustomInline;
 
 			foreach ($text as $idx => $chunk) {
-				$container->appendChild(new Text($chunk));
+				$chunk = new Text($chunk);
+
+				$custom->appendChild($chunk);
 
 				if (!isset($inserts[2][$idx]))
-					continue;
+					break;
 
 				$insert = new HTMLInline(sprintf(
 					"<ins>%s</ins>",
 					$inserts[2][$idx]
 				));
-
-				$container->appendChild($insert);
+				
+				$custom->appendChild($insert);
 			}
 
-			$node->unlink();
+			return $node->replace($custom);
 		}
 	}
 }

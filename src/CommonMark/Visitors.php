@@ -30,20 +30,30 @@ namespace CommonMark {
 		}
 
 		public function enter(IVisitable $node) {
+			if (!$this->visitors) {
+				return;
+			}
+
 			foreach ($this->visitors as $visitor) {
 				$jump = $visitor->enter($node);
 
-				if ($jump instanceof IVisitable)
-					return $jump;
+				if ($jump instanceof IVisitable) {
+					return $jump->accept($this->except($visitor));
+				}
 			}
 		}
 
 		public function leave(IVisitable $node) {
+			if (!$this->visitors) {
+				return;
+			}
+
 			foreach ($this->visitors as $visitor) {
 				$jump = $visitor->leave($node);
 
-				if ($jump instanceof IVisitable)
-					return $jump;
+				if ($jump instanceof IVisitable) {
+					return $jump->accept($this->except($visitor));
+				}	
 			}
 		}
 

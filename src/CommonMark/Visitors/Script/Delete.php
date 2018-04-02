@@ -6,7 +6,7 @@ namespace CommonMark\Visitors\Script {
 	use CommonMark\Node\HTMLInline;
 
 	class Delete extends \CommonMark\Visitors\Visitor {
-		const Pattern = "~(\-{2,})([^\-]+)(\-{2,})~";
+		const Pattern = "~(\-{2,})([^\-{2,}]+)(\-{2,})~";
 
 		public function enter(IVisitable $node) {
 			if (!$node instanceof Text)
@@ -15,31 +15,32 @@ namespace CommonMark\Visitors\Script {
 			if (!\preg_match_all(Delete::Pattern, $node->literal, $deletes))
 				return;
 
-			if ($deletes[0][0] == trim($node->literal)) {
-				$node->replace(
+			if (\count($deletes[0]) == 0 && $deletes[0][0] == \trim($node->literal)) {
+				return $node->replace(
 					new HTMLInline("<del>{$deletes[2][0]}</del>"));
-				return;
 			}
 
 			$text = \preg_split(Delete::Pattern, $node->literal);
 
-			$container = $node->parent;
+			$custom = new \CommonMark\Node\CustomInline;
 
 			foreach ($text as $idx => $chunk) {
-				$container->appendChild(new Text($chunk));
+				$chunk = new Text($chunk);
+
+				$custom->appendChild($chunk);
 
 				if (!isset($deletes[2][$idx]))
-					continue;
+					break;
 
 				$delete = new HTMLInline(sprintf(
 					"<del>%s</del>",
 					$deletes[2][$idx]
 				));
-
-				$container->appendChild($delete);
+				
+				$custom->appendChild($delete);
 			}
 
-			$node->unlink();
+			return $node->replace($custom);
 		}
 	}
 }

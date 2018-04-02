@@ -18,7 +18,7 @@ namespace CommonMark\Visitors\Twitter {
 			if (!$tweet = $this->fetch($status[0]))
 				return;
 
-			$node->replace(new HTMLInline($tweet));
+			return $node->replace(new HTMLInline($tweet));
 		}
 
 		private function fetch(string $status) {

@@ -21,33 +21,35 @@ namespace CommonMark\Visitors\Twitter {
 			if (!\preg_match_all(Handle::Pattern, $node->literal, $handles))
 				return;
 
-			if (count($handles[0]) == 1 && $handles[0][0] == trim($node->literal)) {
+			if (\count($handles[0]) == 1 && $handles[0][0] == \trim($node->literal)) {
 				$link = new Link(
 					"http://twitter.com/{$handles[1][0]}");
 				$link->appendChild(
 					new Text($handles[0][0]));
-				$node->replace($link);
-
-				return;
+				return $node->replace($link);
 			}
 
 			$text = \preg_split(Handle::Pattern, $node->literal);
 
+			$custom = new \CommonMark\Node\CustomInline;
+
 			foreach ($text as $idx => $chunk) {
-				$container->appendChild(new Text($chunk));
+				$chunk = new Text($chunk);
+
+				$custom->appendChild($chunk);
 
 				if (!isset($handles[1][$idx]))
-					continue;
+					break;
 
 				$link = new Link(
 					"http://twitter.com/{$handles[1][$idx]}");
 				$link->appendChild(
 					new Text($handles[0][$idx]));
 
-				$container->appendChild($link);
+				$custom->appendChild($link);
 			}
 
-			$node->unlink();
+			return $node->replace($custom);
 		}
 	}
 }

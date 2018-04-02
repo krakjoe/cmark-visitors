@@ -6,7 +6,7 @@ namespace CommonMark\Visitors\Script {
 	use CommonMark\Node\HTMLInline;
 
 	class Sub extends \CommonMark\Visitors\Visitor {
-		const Pattern = "~(\~{2,})([^\~]+)(\~{2,})~";
+		const Pattern = "~(\~{2,})([^\~{2,}]+)(\~{2,})~";
 
 		public function enter(IVisitable $node) {
 			if (!$node instanceof Text)
@@ -15,31 +15,32 @@ namespace CommonMark\Visitors\Script {
 			if (!\preg_match_all(Sub::Pattern, $node->literal, $subs))
 				return;
 
-			if (count($subs[0]) == 1 && $subs[0][0] == trim($node->literal)) {
-				$node->replace(
+			if (\count($subs[0]) == 1 && $subs[0][0] == \trim($node->literal)) {
+				return $node->replace(
 					new HTMLInline("<sub>{$subs[2][0]}</sub>"));
-				return;
 			}
 
 			$text = \preg_split(Sub::Pattern, $node->literal);
 
-			$container = $node->parent;
+			$custom = new \CommonMark\Node\CustomInline;
 
 			foreach ($text as $idx => $chunk) {
-				$container->appendChild(new Text($chunk));
+				$chunk = new Text($chunk);
+
+				$custom->appendChild($chunk);
 
 				if (!isset($subs[2][$idx]))
-					continue;
+					break;
 
 				$sub = new HTMLInline(sprintf(
 					"<sub>%s</sub>",
 					$subs[2][$idx]
 				));
 
-				$container->appendChild($sub);
+				$custom->appendChild($sub);
 			}
 
-			$node->unlink();
+			return $node->replace($custom);
 		}
 	}
 }
