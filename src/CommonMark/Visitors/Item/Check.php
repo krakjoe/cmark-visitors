@@ -11,9 +11,8 @@ namespace CommonMark\Visitors\Item {
 		const Pattern = "~(\[)([\+\-Xx ])(\])~";
 
 		public function enter(IVisitable $node) {
-			$container = $node->parent;
 
-			if ($container && $node instanceof Text) {
+			if ($node instanceof Text && ($container = $node->parent)) {
 
 				if (!\preg_match_all(Check::Pattern, $node->literal, $checks))
 					return;

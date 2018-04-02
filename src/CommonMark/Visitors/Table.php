@@ -133,6 +133,8 @@ namespace CommonMark\Visitors {
 				case Table::Center:
 					return " style=\"text-align: center;\"";
 			}
+
+			return null;
 		}
 
 		private $headings = [];
