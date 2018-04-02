@@ -1,47 +1,33 @@
 <?php
 namespace CommonMark\Visitors\Tests\Script {
 
-	class Super extends \PHPUnit\Framework\TestCase {
-		
+	class Super extends \CommonMark\Visitors\Tests\TestCase {
+
 		public function testNoMatch() {
-			$doc = \CommonMark\Parse("~~sub~~");
-
-			$visitors = new \CommonMark\Visitors();
-			$visitors
-				->add(new \CommonMark\Visitors\Script\Super);
-			
-			$doc->accept($visitors);
-
-			$this->assertSame(
-				\CommonMark\Render\HTML($doc), "<p>~~sub~~</p>\n");
+			$this->assertTransformationStrings('~~sub~~', function($doc){
+				$visitors = new \CommonMark\Visitors();
+				$visitors
+					->add(new \CommonMark\Visitors\Script\Super);
+				$doc->accept($visitors);
+			}, "<p>~~sub~~</p>\n");
 		}
 
 		public function testMatch() {
-			$doc = \CommonMark\Parse("^^super^^");
-
-			$visitors = new \CommonMark\Visitors();
-			$visitors
-				->add(new \CommonMark\Visitors\Script\Super);
-			
-			$doc->accept($visitors);
-			
-			$this->assertSame(
-				\CommonMark\Render\HTML($doc),
-				"<p><sup>super</sup></p>\n");
+			$this->assertTransformationStrings('^^super^^', function($doc){
+				$visitors = new \CommonMark\Visitors();
+				$visitors
+					->add(new \CommonMark\Visitors\Script\Super);
+				$doc->accept($visitors);
+			}, "<p><sup>super</sup></p>\n");
 		}
 
 		public function testMatchReconstruct() {
-			$doc = \CommonMark\Parse("following was ^^super script^^ mid content");
-
-			$visitors = new \CommonMark\Visitors();
-			$visitors
-				->add(new \CommonMark\Visitors\Script\Super);
-			
-			$doc->accept($visitors);
-			
-			$this->assertSame(
-				\CommonMark\Render\HTML($doc),
-				"<p>following was <sup>super script</sup> mid content</p>\n");
+			$this->assertTransformationStrings('following was ^^super script^^ mid content', function($doc){
+				$visitors = new \CommonMark\Visitors();
+				$visitors
+					->add(new \CommonMark\Visitors\Script\Super);
+				$doc->accept($visitors);
+			}, "<p>following was <sup>super script</sup> mid content</p>\n");
 		}
 	}
 }

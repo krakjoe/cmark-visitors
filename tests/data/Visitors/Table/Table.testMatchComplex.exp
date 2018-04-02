@@ -1,0 +1,31 @@
+<p><table>
+<thead>
+<tr>
+<th style="text-align: left;">Left</th>
+<th style="text-align: center;">Center</th>
+<th style="text-align: right;">Right</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><del>A</del></td>
+<td style="text-align: center;">before <sup>super</sup> after</td>
+<td style="text-align: right;"><ins>C</ins></td>
+</tr>
+<tr>
+<td style="text-align: left;">D</td>
+<td style="text-align: center;">before <sub>sub</sub> after</td>
+<td style="text-align: right;">F</td>
+</tr>
+<tr>
+<td style="text-align: left;">G</td>
+<td style="text-align: center;"><sub>sub</sub> after</td>
+<td style="text-align: right;">I</td>
+</tr>
+<tr>
+<td style="text-align: left;">J</td>
+<td style="text-align: center;">before <sub>sub</sub></td>
+<td style="text-align: right;">L</td>
+</tr>
+</tbody>
+</table></p>

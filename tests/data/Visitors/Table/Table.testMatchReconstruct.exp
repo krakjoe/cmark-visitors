@@ -1,0 +1,26 @@
+<p><table>
+<thead>
+<tr>
+<th style="text-align: left;">Left Align</th>
+<th style="text-align: center;">Centered</th>
+<th style="text-align: right;">Right Align</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Left1</td>
+<td style="text-align: center;">Centered1</td>
+<td style="text-align: right;">Right1</td>
+</tr>
+<tr>
+<td style="text-align: left;">Left2</td>
+<td style="text-align: center;">Centered2</td>
+<td style="text-align: right;">Right3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Left3</td>
+<td style="text-align: center;">Centered3</td>
+<td style="text-align: right;">Right4</td>
+</tr>
+</tbody>
+</table></p>

@@ -11,5 +11,10 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^7.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CommonMark\\Visitors\\Tests\\": "tests/"
+        }
     }
 }
