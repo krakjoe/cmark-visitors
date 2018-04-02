@@ -42,6 +42,12 @@ namespace CommonMark\Visitors {
 			}
 
 			if ($this->headings && $node instanceof Heading) {
+				if (!$node->next) {
+					$this->clear();
+
+					return;
+				}
+
 				$node->next->accept(new class($this->rows) 
 							extends \CommonMark\Visitors\Visitor {
 					public function __construct(array &$rows) {
@@ -116,9 +122,7 @@ namespace CommonMark\Visitors {
 				$root->appendChild(new SoftBreak);
 				$root->appendChild(new HTMLInline("</table>"));
 
-				$this->headings = [];
-				$this->rows = [];
-				$this->align = [];
+				$this->clear();
 
 				return $this->top->replace($root);
 			}
@@ -135,6 +139,12 @@ namespace CommonMark\Visitors {
 			}
 
 			return null;
+		}
+
+		private function clear() {
+			$this->headings = [];
+			$this->rows = [];
+			$this->align = [];
 		}
 
 		private $headings = [];
