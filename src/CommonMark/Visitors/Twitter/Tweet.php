@@ -22,15 +22,15 @@ namespace CommonMark\Visitors\Twitter {
 		}
 
 		private function fetch(string $status) {
-			$result = \file_get_contents(\sprintf(
+			/* @TODO(anyone) this is terrible */
+			$result = @\file_get_contents(\sprintf(
 				"https://publish.twitter.com/oembed?url=%s",
 				\urlencode($status)));
 
 			if (!$result)
 				return;
 
-			if (!$result = \json_decode($result, true))
-				return;
+			$result = \json_decode($result, true);
 
 			return $result['html'];
 		}

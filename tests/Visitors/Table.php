@@ -2,11 +2,6 @@
 namespace CommonMark\Visitors\Tests\Twitter {
 
 	class Table extends \PHPUnit\Framework\TestCase {
-		public function testClassExists() {
-			$this->assertTrue(
-				class_exists(
-					\CommonMark\Visitors\Table::class));
-		}
 
 		public function testNoMatch() {
 			$doc = \CommonMark\Parse("+++++++++++++++++++++++++++++++++++++++++++n|: Left Align |: Centered :| Right Align :|\n+++++++++++++++++++++++++++++++++++++++++++n| Left        |  Centered  |        Right |\n+++++++++++++++++++++++++++++++++++++++++++");
@@ -32,7 +27,7 @@ namespace CommonMark\Visitors\Tests\Twitter {
 			$doc->accept($visitors);
 			
 			$this->assertSame(
-				\CommonMark\Render\HTML($doc->firstChild),
+				\CommonMark\Render\HTML($doc),
 				"<p><table>\n<thead>\n<tr>\n<th style=\"text-align: left;\">Left Align</th>\n<th style=\"text-align: center;\">Centered</th>\n<th style=\"text-align: right;\">Right Align</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: left;\">Left</td>\n<td style=\"text-align: center;\">Centered</td>\n<td style=\"text-align: right;\">Right</td>\n</tr>\n</tbody>\n</table></p>\n");
 		}
 
@@ -46,7 +41,7 @@ namespace CommonMark\Visitors\Tests\Twitter {
 			$doc->accept($visitors);
 			
 			$this->assertSame(
-				\CommonMark\Render\HTML($doc->firstChild),
+				\CommonMark\Render\HTML($doc),
 				"<p><table>\n<thead>\n<tr>\n<th style=\"text-align: left;\">Left Align</th>\n<th style=\"text-align: center;\">Centered</th>\n<th style=\"text-align: right;\">Right Align</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: left;\">Left1</td>\n<td style=\"text-align: center;\">Centered1</td>\n<td style=\"text-align: right;\">Right1</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\">Left2</td>\n<td style=\"text-align: center;\">Centered2</td>\n<td style=\"text-align: right;\">Right3</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\">Left3</td>\n<td style=\"text-align: center;\">Centered3</td>\n<td style=\"text-align: right;\">Right4</td>\n</tr>\n</tbody>\n</table></p>\n");
 		}
 	}

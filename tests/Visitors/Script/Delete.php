@@ -2,11 +2,6 @@
 namespace CommonMark\Visitors\Tests\Script {
 
 	class Delete extends \PHPUnit\Framework\TestCase {
-		public function testClassExists() {
-			$this->assertTrue(
-				class_exists(
-					\CommonMark\Visitors\Script\Delete::class));
-		}
 
 		public function testNoMatch() {
 			$doc = \CommonMark\Parse("++inserted++");
@@ -31,7 +26,7 @@ namespace CommonMark\Visitors\Tests\Script {
 			$doc->accept($visitors);
 			
 			$this->assertSame(
-				\CommonMark\Render\HTML($doc->firstChild),
+				\CommonMark\Render\HTML($doc),
 				"<p><del>deleted</del></p>\n");
 		}
 
@@ -45,7 +40,7 @@ namespace CommonMark\Visitors\Tests\Script {
 			$doc->accept($visitors);
 			
 			$this->assertSame(
-				\CommonMark\Render\HTML($doc->firstChild),
+				\CommonMark\Render\HTML($doc),
 				"<p>following was <del>deleted</del> mid content</p>\n");
 		}
 	}

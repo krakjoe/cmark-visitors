@@ -2,11 +2,6 @@
 namespace CommonMark\Visitors\Tests\Item {
 
 	class Check extends \PHPUnit\Framework\TestCase {
-		public function testClassExists() {
-			$this->assertTrue(
-				class_exists(
-					\CommonMark\Visitors\Item\Check::class));
-		}
 
 		public function testNoMatch() {
 			$doc = \CommonMark\Parse("  * item");
@@ -32,7 +27,7 @@ namespace CommonMark\Visitors\Tests\Item {
 			$doc->accept($visitors);
 			
 			$this->assertSame(
-				\CommonMark\Render\HTML($doc->firstChild),
+				\CommonMark\Render\HTML($doc),
 				"<ul>\n<li>&#x2610; item</li>\n</ul>\n");
 		}
 
@@ -46,7 +41,7 @@ namespace CommonMark\Visitors\Tests\Item {
 			$doc->accept($visitors);
 			
 			$this->assertSame(
-				\CommonMark\Render\HTML($doc->firstChild),
+				\CommonMark\Render\HTML($doc),
 				"<ul>\n<li>&#x2611; item</li>\n</ul>\n");
 		}
 
@@ -60,7 +55,7 @@ namespace CommonMark\Visitors\Tests\Item {
 			$doc->accept($visitors);
 			
 			$this->assertSame(
-				\CommonMark\Render\HTML($doc->firstChild),
+				\CommonMark\Render\HTML($doc),
 				"<ul>\n<li>&#x2611; item</li>\n</ul>\n");
 		}
 
@@ -74,7 +69,7 @@ namespace CommonMark\Visitors\Tests\Item {
 			$doc->accept($visitors);
 			
 			$this->assertSame(
-				\CommonMark\Render\HTML($doc->firstChild),
+				\CommonMark\Render\HTML($doc),
 				"<ul>\n<li>&#x2612; item</li>\n</ul>\n");
 		}
 
@@ -88,7 +83,7 @@ namespace CommonMark\Visitors\Tests\Item {
 			$doc->accept($visitors);
 			
 			$this->assertSame(
-				\CommonMark\Render\HTML($doc->firstChild),
+				\CommonMark\Render\HTML($doc),
 				"<ul>\n<li>&#x2611; item</li>\n</ul>\n");
 		}
 	}

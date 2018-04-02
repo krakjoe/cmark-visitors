@@ -13,6 +13,10 @@ namespace CommonMark\Visitors\Twitter {
 			if (!$node instanceof Text)
 				return;
 
+			$container = $node->parent;
+
+			if ($container instanceof Link or $container instanceof Image)
+				return;
 
 			if (!\preg_match_all(Handle::Pattern, $node->literal, $handles))
 				return;
@@ -28,8 +32,6 @@ namespace CommonMark\Visitors\Twitter {
 			}
 
 			$text = \preg_split(Handle::Pattern, $node->literal);
-
-			$container = $node->parent;
 
 			foreach ($text as $idx => $chunk) {
 				$container->appendChild(new Text($chunk));

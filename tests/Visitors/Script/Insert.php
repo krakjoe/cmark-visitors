@@ -2,11 +2,6 @@
 namespace CommonMark\Visitors\Tests\Script {
 
 	class Insert extends \PHPUnit\Framework\TestCase {
-		public function testClassExists() {
-			$this->assertTrue(
-				class_exists(
-					\CommonMark\Visitors\Script\Insert::class));
-		}
 
 		public function testNoMatch() {
 			$doc = \CommonMark\Parse("--deleted--");
@@ -31,7 +26,7 @@ namespace CommonMark\Visitors\Tests\Script {
 			$doc->accept($visitors);
 			
 			$this->assertSame(
-				\CommonMark\Render\HTML($doc->firstChild),
+				\CommonMark\Render\HTML($doc),
 				"<p><ins>inserted</ins></p>\n");
 		}
 
@@ -45,7 +40,7 @@ namespace CommonMark\Visitors\Tests\Script {
 			$doc->accept($visitors);
 			
 			$this->assertSame(
-				\CommonMark\Render\HTML($doc->firstChild),
+				\CommonMark\Render\HTML($doc),
 				"<p>following was <ins>inserted</ins> mid content</p>\n");
 		}
 	}

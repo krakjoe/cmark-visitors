@@ -2,12 +2,7 @@
 namespace CommonMark\Visitors\Tests\Script {
 
 	class Super extends \PHPUnit\Framework\TestCase {
-		public function testClassExists() {
-			$this->assertTrue(
-				class_exists(
-					\CommonMark\Visitors\Script\Super::class));
-		}
-
+		
 		public function testNoMatch() {
 			$doc = \CommonMark\Parse("~~sub~~");
 
@@ -31,7 +26,7 @@ namespace CommonMark\Visitors\Tests\Script {
 			$doc->accept($visitors);
 			
 			$this->assertSame(
-				\CommonMark\Render\HTML($doc->firstChild),
+				\CommonMark\Render\HTML($doc),
 				"<p><sup>super</sup></p>\n");
 		}
 
@@ -45,7 +40,7 @@ namespace CommonMark\Visitors\Tests\Script {
 			$doc->accept($visitors);
 			
 			$this->assertSame(
-				\CommonMark\Render\HTML($doc->firstChild),
+				\CommonMark\Render\HTML($doc),
 				"<p>following was <sup>super script</sup> mid content</p>\n");
 		}
 	}

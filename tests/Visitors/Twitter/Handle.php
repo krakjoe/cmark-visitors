@@ -2,11 +2,6 @@
 namespace CommonMark\Visitors\Tests\Twitter {
 
 	class Handle extends \PHPUnit\Framework\TestCase {
-		public function testClassExists() {
-			$this->assertTrue(
-				class_exists(
-					\CommonMark\Visitors\Twitter\Handle::class));
-		}
 
 		public function testNoMatch() {
 			$doc = \CommonMark\Parse("#krakjoe");
@@ -22,6 +17,20 @@ namespace CommonMark\Visitors\Tests\Twitter {
 				"<p>#krakjoe</p>\n");
 		}
 
+		public function testNoMatchInLink() {
+			$doc = \CommonMark\Parse("[@krakjoe](http://another.link)");
+
+			$visitors = new \CommonMark\Visitors();
+			$visitors
+				->add(new \CommonMark\Visitors\Twitter\Handle);
+			
+			$doc->accept($visitors);
+
+			$this->assertSame(
+				\CommonMark\Render\HTML($doc), 
+				"<p><a href=\"http://another.link\">@krakjoe</a></p>\n");
+		}
+
 		public function testMatch() {
 			$doc = \CommonMark\Parse("@krakjoe");
 
@@ -32,7 +41,7 @@ namespace CommonMark\Visitors\Tests\Twitter {
 			$doc->accept($visitors);
 			
 			$this->assertSame(
-				\CommonMark\Render\HTML($doc->firstChild),
+				\CommonMark\Render\HTML($doc),
 				"<p><a href=\"http://twitter.com/krakjoe\">@krakjoe</a></p>\n");
 		}
 
@@ -46,7 +55,7 @@ namespace CommonMark\Visitors\Tests\Twitter {
 			$doc->accept($visitors);
 			
 			$this->assertSame(
-				\CommonMark\Render\HTML($doc->firstChild),
+				\CommonMark\Render\HTML($doc),
 				"<p>The handle <a href=\"http://twitter.com/krakjoe\">@krakjoe</a> in the middle</p>\n");
 		}
 	}

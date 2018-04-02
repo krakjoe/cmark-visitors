@@ -3,7 +3,11 @@ namespace CommonMark {
 	use CommonMark\Interfaces\IVisitor;
 	use CommonMark\Interfaces\IVisitable;
 
-	class Visitors extends \CommonMark\Visitors\Visitor {
+	class Visitors extends \CommonMark\Visitors\Visitor implements \Countable {
+
+		public function count() {
+			return count($this->visitors);
+		}
 
 		public function clear() {
 			$this->visitors = [];
@@ -26,7 +30,6 @@ namespace CommonMark {
 		}
 
 		public function enter(IVisitable $node) {
-
 			foreach ($this->visitors as $visitor) {
 				$jump = $visitor->enter($node);
 
