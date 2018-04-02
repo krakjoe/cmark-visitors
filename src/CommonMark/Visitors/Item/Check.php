@@ -13,11 +13,7 @@ namespace CommonMark\Visitors\Item {
 		public function enter(IVisitable $node) {
 			$container = $node->parent;
 
-			if ($node instanceof Text &&
-			    $container &&
-			    $container instanceof Paragraph &&
-			    $container->parent &&
-			    $container->parent instanceof Item) {
+			if ($container && $node instanceof Text) {
 
 				if (!\preg_match_all(Check::Pattern, $node->literal, $checks))
 					return;
@@ -27,9 +23,11 @@ namespace CommonMark\Visitors\Item {
 				$custom = new \CommonMark\Node\CustomInline;
 
 				foreach ($text as $idx => $chunk) {
-					$chunk = new Text($chunk);
+					if ($chunk) {
+						$chunk = new Text($chunk);
 
-					$custom->appendChild($chunk);
+						$custom->appendChild($chunk);
+					}
 
 					if (!isset($checks[2][$idx]))
 						break;

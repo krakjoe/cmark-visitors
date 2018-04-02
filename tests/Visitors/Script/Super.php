@@ -29,5 +29,14 @@ namespace CommonMark\Visitors\Tests\Script {
 				$doc->accept($visitors);
 			}, "<p>following was <sup>super script</sup> mid content</p>\n");
 		}
+
+		public function testMatchWithChildren() {
+			$this->assertTransformationStrings('^^[title](url)^^', function($doc){
+				$visitors = new \CommonMark\Visitors();
+				$visitors
+					->add(new \CommonMark\Visitors\Script\Super);
+				$doc->accept($visitors);
+			}, "<p><sup><a href=\"url\">title</a></sup></p>\n");
+		}
 	}
 }

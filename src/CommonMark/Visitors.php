@@ -30,10 +30,6 @@ namespace CommonMark {
 		}
 
 		public function enter(IVisitable $node) {
-			if (!$this->visitors) {
-				return;
-			}
-
 			foreach ($this->visitors as $visitor) {
 				$jump = $visitor->enter($node);
 
@@ -44,10 +40,6 @@ namespace CommonMark {
 		}
 
 		public function leave(IVisitable $node) {
-			if (!$this->visitors) {
-				return;
-			}
-
 			foreach ($this->visitors as $visitor) {
 				$jump = $visitor->leave($node);
 
@@ -57,6 +49,23 @@ namespace CommonMark {
 			}
 		}
 
-		private $visitors;
+		public static function defaults() {
+			$visitors = new self;
+
+			foreach ([
+				\CommonMark\Visitors\Script\Insert::class,
+				\CommonMark\Visitors\Script\Delete::class,
+				\CommonMark\Visitors\Script\Super::class,
+				\CommonMark\Visitors\Script\Sub::class,
+				\CommonMark\Visitors\Item\Check::class,
+				\CommonMark\Visitors\Table::class,			
+			] as $visitor) {
+				$visitors->add(new $visitor);
+			}
+
+			return $visitors;
+		}
+
+		private $visitors = [];
 	}
 }
