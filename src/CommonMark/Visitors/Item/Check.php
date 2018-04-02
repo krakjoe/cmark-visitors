@@ -2,6 +2,7 @@
 namespace CommonMark\Visitors\Item {
 	use CommonMark\Interfaces\IVisitor;
 	use CommonMark\Interfaces\IVisitable;
+	use CommonMark\Node\Paragraph;
 	use CommonMark\Node\Text;
 	use CommonMark\Node\Item;
 	use CommonMark\Node\HTMLInline;
@@ -10,27 +11,28 @@ namespace CommonMark\Visitors\Item {
 		const Pattern = "~(\[)([\+\-Xx ])(\])~";
 
 		public function enter(IVisitable $node) {
-			if ($node instanceof Item) {
-				$this->inItem = true;
+			$container = $node->parent;
 
-				return;
-			}
-
-			if ($this->inItem && $node instanceof Text) {
-				$container = $node->parent;
+			if ($node instanceof Text &&
+			    $container &&
+			    $container instanceof Paragraph &&
+			    $container->parent &&
+			    $container->parent instanceof Item) {
 
 				if (!\preg_match_all(Check::Pattern, $node->literal, $checks))
 					return;
 
 				$text = \preg_split(Check::Pattern, $node->literal);
 
-				$node->unlink();
+				$custom = new \CommonMark\Node\CustomInline;
 
 				foreach ($text as $idx => $chunk) {
-					$container->appendChild(new Text($chunk));
+					$chunk = new Text($chunk);
+
+					$custom->appendChild($chunk);
 
 					if (!isset($checks[2][$idx]))
-						continue;
+						break;
 
 					switch ($checks[2][$idx]) {
 						case "X":
@@ -46,18 +48,12 @@ namespace CommonMark\Visitors\Item {
 						default:
 							$check = new HTMLInline("&#x2610;");
 					}
-
-					$container->appendChild($check);
+					
+					$custom->appendChild($check);
 				}
+
+				return $node->replace($custom);
 			}
 		}
-
-		public function leave(IVisitable $node) {
-			if ($node instanceof Item) {
-				$this->inItem = false;
-			}
-		}
-
-		private $inItem = false;
 	}
 }
