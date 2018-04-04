@@ -8,8 +8,7 @@ namespace CommonMark\Visitors\Tests {
 
 			$transform($doc);
 
-			$this->assertSame(
-				\CommonMark\Render\HTML($doc), $exp);
+			$this->assertSame($exp, \CommonMark\Render\HTML($doc));
 		}
 
 		public function assertTransformationFiles(string $class, string $test, \Closure $transform) {
