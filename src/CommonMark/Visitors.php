@@ -31,21 +31,23 @@ namespace CommonMark {
 
 		public function enter(IVisitable $node) {
 			foreach ($this->visitors as $visitor) {
-				$jump = $visitor->enter($node);
+				$result = $visitor->enter($node);
 
-				if ($jump instanceof IVisitable) {
-					return $jump->accept($this->except($visitor));
+				if ($result instanceof IVisitable) {
+					$result->accept(
+						$this->except($visitor));
 				}
 			}
 		}
 
 		public function leave(IVisitable $node) {
 			foreach ($this->visitors as $visitor) {
-				$jump = $visitor->leave($node);
+				$result = $visitor->leave($node);
 
-				if ($jump instanceof IVisitable) {
-					return $jump->accept($this->except($visitor));
-				}	
+				if ($result instanceof IVisitable) {
+					$result->accept(
+						$this->except($visitor));
+				}
 			}
 		}
 

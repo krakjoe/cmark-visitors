@@ -79,7 +79,7 @@ namespace CommonMark\Visitors {
 
 		public function leave(IVisitable $node) {
 			if ($this->headings && $this->rows) {
-				$root = new Paragraph;	
+				$root = new Paragraph;
 
 				$node->unlink();	
 
