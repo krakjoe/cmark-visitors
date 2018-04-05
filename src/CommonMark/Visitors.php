@@ -5,23 +5,35 @@ namespace CommonMark {
 
 	class Visitors extends \CommonMark\Visitors\Visitor implements \Countable {
 
-		public function count() {
-			return count($this->visitors);
+		public function add(IVisitor ... $visitor) : int {
+			$state = count($this->visitors);
+
+			foreach ($visitor as $included) {
+				$this->visitors[] = $included;
+			}
+
+			return count($this->visitors) - $state;
 		}
 
-		public function clear() {
-			$this->visitors = [];
+		public function remove(IVisitor ... $exclude) : int {
+			$state = count($this->visitors);
+
+			foreach ($this->visitors as $idx => $included) {
+				foreach ($exclude as $excluded) {
+					if ($included === $excluded) {
+						unset($this->visitors[$idx]);
+					}
+				}
+			}
+
+			return $state - count($this->visitors);
 		}
 
-		public function add(IVisitor $visitor) {
-			$this->visitors[] = $visitor;
-		}
-
-		public function except(IVisitor ... $exclude) : Visitors {
+		public function except(IVisitor ... $exclude) : self {
 			$result = new self;
 			foreach ($this->visitors as $included) {
 				foreach ($exclude as $excluded) {
-					if ($included == $excluded)
+					if ($included === $excluded)
 						continue 2;
 				}
 				$result->add($included);
@@ -36,6 +48,8 @@ namespace CommonMark {
 				if ($result instanceof IVisitable) {
 					$result->accept(
 						$this->except($visitor));
+				} else if ($result === IVisitor::Done) {
+					$this->remove($visitor);
 				}
 			}
 		}
@@ -47,24 +61,29 @@ namespace CommonMark {
 				if ($result instanceof IVisitable) {
 					$result->accept(
 						$this->except($visitor));
+				} else if ($result === IVisitor::Done) {
+					$this->remove($visitor);
 				}
 			}
 		}
 
-		public static function defaults() {
+		public function count() : int {
+			return count($this->visitors);
+		}
+
+		public function clear() : void {
+			$this->visitors = [];
+		}
+
+		public static function defaults() : self {
 			$visitors = new self;
-
-			foreach ([
-				\CommonMark\Visitors\Script\Insert::class,
-				\CommonMark\Visitors\Script\Delete::class,
-				\CommonMark\Visitors\Script\Super::class,
-				\CommonMark\Visitors\Script\Sub::class,
-				\CommonMark\Visitors\Item\Check::class,
-				\CommonMark\Visitors\Table::class,			
-			] as $visitor) {
-				$visitors->add(new $visitor);
-			}
-
+			$visitors->add(
+				new \CommonMark\Visitors\Script\Insert,
+				new \CommonMark\Visitors\Script\Delete,
+				new \CommonMark\Visitors\Script\Super,
+				new \CommonMark\Visitors\Script\Sub,
+				new \CommonMark\Visitors\Item\Check,
+				new \CommonMark\Visitors\Table);
 			return $visitors;
 		}
 
